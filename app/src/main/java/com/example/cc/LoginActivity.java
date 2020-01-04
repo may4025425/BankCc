@@ -3,6 +3,7 @@ package com.example.cc;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +17,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        EditText prefusername = findViewById(R.id.username);
+        SharedPreferences setting = getSharedPreferences("atm",MODE_PRIVATE);
+        prefusername.setText(setting.getString("PREF_USERNAME",""));
 
     }
     public void login(View view){
@@ -23,29 +27,17 @@ public class LoginActivity extends AppCompatActivity {
         EditText edpassword = findViewById(R.id.password);
         String username = edusername.getText().toString();
         String password = edpassword.getText().toString();
-        //省成兩行
-
         if("may".equals(username) && "1234".equals(password)) {
-
-//            String user = "may";
-//            SharedPreferences pref = getSharedPreferences("test",MODE_PRIVATE);
-//            pref.edit()//呼叫edit()方法取得Editor物件
-//                    .putString("USER",user)//開始新增三筆資料
-//                    .putInt("STAGE",3)
-//                    .putFloat("HP",98.3f)
-//                    .commit();//最後將三筆資料寫入設定檔
-
-            String userid = getSharedPreferences("test",MODE_PRIVATE).getString("USER","");
-//先取得SharedPreferences 物件
-//取得標籤"USER"的設定值，
-
-
-
-            SharedPreferences setting = getSharedPreferences("atm", MODE_PRIVATE);
-            setting.edit()//寫入資料
-                    .putString("PREF_USERID", username).apply();;
+            SharedPreferences setting = getSharedPreferences("atm",MODE_PRIVATE);
+            setting.edit()
+                    .putString("PREF_USERNAME",username)
+                    .apply();
             Toast.makeText(this,"登入成功",Toast.LENGTH_LONG).show();
-            finish();
+            getIntent().putExtra("LOGIN_USERNAME",username);
+            getIntent().putExtra("LOGIN_PASSWORD",password);
+            setResult(RESULT_OK,getIntent());
+            Intent intent = new Intent(this,CreateUserActivity.class);
+            startActivity(intent);
         }else {
             new AlertDialog.Builder(this)
                     .setTitle("登入訊息")
@@ -55,3 +47,14 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 }
+////            String user = "may";
+////            SharedPreferences pref = getSharedPreferences("test",MODE_PRIVATE);
+////            pref.edit()//呼叫edit()方法取得Editor物件
+////                    .putString("USER",user)//開始新增三筆資料
+////                    .putInt("STAGE",3)
+////                    .putFloat("HP",98.3f)
+////                    .commit();//最後將三筆資料寫入設定檔
+//
+//            String userid = getSharedPreferences("test",MODE_PRIVATE).getString("USER","");
+////先取得SharedPreferences 物件
+////取得標籤"USER"的設定值，
