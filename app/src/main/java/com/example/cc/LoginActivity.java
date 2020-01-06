@@ -45,16 +45,19 @@ public class LoginActivity extends AppCompatActivity {
         String username = edusername.getText().toString();
         String password = edpassword.getText().toString();
         if("may".equals(username) && "1234".equals(password)) {
+            Intent intent = getIntent();
+            intent.putExtra("username",username);
+            intent.putExtra("password",password);
+            setResult(RESULT_OK,intent);
+
             SharedPreferences setting = getSharedPreferences("atm",MODE_PRIVATE);
             setting.edit()
                     .putString("PREF_USERNAME",username)
                     .apply();
             Toast.makeText(this,"登入成功",Toast.LENGTH_LONG).show();
-            getIntent().putExtra("LOGIN_USERNAME",username);
-            getIntent().putExtra("LOGIN_PASSWORD",password);
-            setResult(RESULT_OK,getIntent());
-            Intent intent = new Intent(this,CreateUserActivity.class);
-            startActivity(intent);
+
+            Intent intent2 = new Intent(this,CreateUserActivity.class);
+            startActivity(intent2);
         }else {
             new AlertDialog.Builder(this)
                     .setTitle("登入訊息")

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -32,8 +33,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == RC_LOGIN){
             if(resultCode == RESULT_OK){
-//                String username = data.getStringExtra("LOGIN_USERNAME");
-//                String password = data.getStringExtra("LOGIN_PASSWD");
+
                 String nickname = getSharedPreferences("atm",MODE_PRIVATE)
                         .getString("nickname",null);
                 int age = getSharedPreferences("atm",MODE_PRIVATE)
@@ -43,9 +43,8 @@ public class MainActivity extends AppCompatActivity {
                 if(nickname == null && age == 0 && gender == null){
                     Intent intent = new Intent(this,CreateUserActivity.class);
                     startActivity(intent);
-
             }else{
-               finish();
+                    finish();
                 }
             }
         }
@@ -58,3 +57,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(back);
     }
 }
+//    String username = data.getStringExtra("username");
+//    String password = data.getStringExtra("password");
+//                Log.d("main","登入使用者帳號：" + username);
+//                Log.d("main","登入使用者密碼：" + password);
