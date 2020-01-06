@@ -11,17 +11,16 @@ import android.widget.EditText;
 public class MainActivity extends AppCompatActivity {
     private static final int RC_LOGIN = 1;
     boolean login = false;
-    private EditText edmoney;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        edmoney = findViewById(R.id.money);
+
         if(!login){
             Intent intent = new Intent(this,LoginActivity.class);
             startActivityForResult(intent,RC_LOGIN);
-            edmoney.getText().toString();
         }else{
             finish();
         }
@@ -52,7 +51,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     public void ok(View view){
+       EditText edmoney = findViewById(R.id.money);
+       String money = edmoney.getText().toString();
         Intent back = new Intent(this,MoneyActivity.class);
+        back.putExtra("money",money);
         startActivity(back);
     }
 }
