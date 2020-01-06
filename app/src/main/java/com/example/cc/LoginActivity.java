@@ -7,11 +7,16 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.EdgeEffect;
 import android.widget.EditText;
+import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
+
+    boolean isNext = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +25,18 @@ public class LoginActivity extends AppCompatActivity {
         EditText prefusername = findViewById(R.id.username);
         SharedPreferences setting = getSharedPreferences("atm",MODE_PRIVATE);
         prefusername.setText(setting.getString("PREF_USERNAME",""));
+         final Switch sw = findViewById(R.id.sw);
+        sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                isNext = isChecked ;
+                TextView idenglish = findViewById(R.id.idenglish);
+                TextView pwenglish = findViewById(R.id.pwenglish);
+                sw.setText(isChecked ? "Chinese" : "英文");
+                idenglish.setText(isChecked ? "ID" : "帳號");
+                pwenglish.setText(isChecked ? "PASSWORD" : "密碼");
+            }
+        });
 
     }
     public void login(View view){
